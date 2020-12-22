@@ -1,7 +1,7 @@
 <template>
 
     <Layout class-prefix="layout">
-        {{record}}
+
         <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
         <Types :value.sync="record.type"/>
 
@@ -21,18 +21,16 @@
     import Tags from '@/components/Money/Tags.vue';
     import {Component, Watch} from 'vue-property-decorator';
 
-    // const record={
-    //     tags:['1','2'],
-    //     notes:'xxx',
-    //     type:'-',
-    //     amount: 100
-    // };
+
+    const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
+
 
     type Record = {
         tags: string[];
         notes: string;
         type: string;
         amount: number;
+        createdAt?: Date;
     }
 
     @Component({
@@ -41,7 +39,8 @@
     export default class Money extends Vue {
         // name: 'Money',
         tags = ['衣', '食', '住', '行', '吃', '喝'];
-        recordList: Record[] = [];
+        recordList: Record[] = recordList;
+
         record: Record = {
             tags: [],
             notes: '',
@@ -57,23 +56,19 @@
             this.record.notes = value;
         }
 
-        // onUpdateType(value: string) {
-        //     this.record.type = value;
-        // }
-
         onUpdateAmount(value: string) {
             this.record.amount = parseFloat(value);
         }
 
         saveRecord() {
-            const record2 = JSON.parse(JSON.stringify(this.record));
+            const record2: Record = JSON.parse(JSON.stringify(this.record));
+            record2.createdAt = new Date();
             this.recordList.push(record2);
-            console.log(this.recordList);
         }
 
         @Watch('recordList')
         onRecordChange() {
-            localStorage.setItem('recordList', JSON.stringify(this.recordList));
+            window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
         }
 
     }
@@ -81,7 +76,6 @@
 <style lang="scss">
 
     .layout-content {
-        /*border: 3px solid red;*/
         display: flex;
         flex-direction: column-reverse;
     }
