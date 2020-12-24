@@ -32,14 +32,12 @@
         tag?: { id: string; name: string } = undefined;
 
         created() {
-            console.log(this.$route.params);
             const id = this.$route.params.id;
             tagListModel.fetch;
             const tags = tagListModel.data;
             const tag = tags.filter(t => t.id === id)[0];
             if (tag) {
                 this.tag = tag;
-                console.log(tag);
             } else {
                 this.$router.replace('/404');
             }
@@ -52,13 +50,19 @@
         }
 
         remove() {
-            if (this.tag){
-                tagListModel.remove(this.tag.id)
+            if (this.tag) {
+                if (tagListModel.remove(this.tag.id)) {
+                    this.$router.back();
+                } else {
+                    window.alert(
+                        '删除失败'
+                    );
+                }
             }
         }
 
-        goBack(){
-            this.$router.back()
+        goBack() {
+            this.$router.back();
         }
     }
 </script>

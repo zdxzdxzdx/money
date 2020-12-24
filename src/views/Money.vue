@@ -1,13 +1,12 @@
 <template>
 
     <Layout class-prefix="layout">
-        {{record}}
         <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
         <Types :value.sync="record.type"/>
         <div class="notes">
-        <FormItem filed-name="备注"
-               placeholder="在这里输入备注"
-               @update:value="onUpdateNotes"/>
+            <FormItem filed-name="备注"
+                      placeholder="在这里输入备注"
+                      @update:value="onUpdateNotes"/>
         </div>
         <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
 
@@ -26,11 +25,11 @@
     import tagListModel from '@/models/tagListModel';
 
 
-    const recordList =recordListModel.fetch()
-    const tagList=tagListModel.fetch()
+    const recordList = recordListModel.fetch();
+    const tagList = tagListModel.fetch();
 
     @Component({
-        components: {Tags,  FormItem, Types, NumberPad}
+        components: {Tags, FormItem, Types, NumberPad}
     })
     export default class Money extends Vue {
         // name: 'Money',
@@ -64,7 +63,7 @@
 
         @Watch('recordList')
         onRecordChange() {
-           recordListModel.save(this.recordList)
+            recordListModel.save(this.recordList);
         }
 
     }
@@ -75,7 +74,8 @@
         display: flex;
         flex-direction: column-reverse;
     }
-    .notes{
+
+    .notes {
         padding: 12px 0;
     }
 </style>
