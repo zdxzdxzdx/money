@@ -34,7 +34,9 @@ const routes: Array<RouteConfig> = [
     {
         path:'*',
         component:Notfound
-    }
+    },
+
+
 
 ];
 
