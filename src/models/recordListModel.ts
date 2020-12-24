@@ -9,6 +9,7 @@ const recordListModel = {
         const record2: RecordItem = clone(record);
         record2.createdAt = new Date();
         this.data.push(record2);
+        this.save()
     },
     //读数据 写数据
     fetch() {
