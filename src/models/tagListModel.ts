@@ -57,8 +57,8 @@ const tagListModel: TagListModel = {
         for (let i = 0; i < this.data.length; i++) {
             if (this.data[i].id === id) {
                 index = i;
+                break;
             }
-            break;
         }
         console.log(index);
         this.data.splice(index, 1);
