@@ -4,14 +4,26 @@ import clone from '@/lib/clone';
 import createdId from '@/lib/createdId';
 
 Vue.use(Vuex);
+//类型
+type RootState = {
+    recordList:  RecordItem[],
+    tagList:  Tag[],
+    currentTag?: Tag
+
+}
 const store = new Vuex.Store({
 
     state: {
-        recordList: [] as RecordItem[],
-        tagList: [] as Tag[]
+        recordList: [],
+        tagList: [],
+        currentTag: undefined
 
-    },
+    } as RootState,
     mutations: {
+        setCurrentTag(state,id:string){
+            state.currentTag=state.tagList.filter(t => t.id === id)[0]
+
+        },
         fetchRecords(state) {
             state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
         },
@@ -25,7 +37,7 @@ const store = new Vuex.Store({
             window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
         },
         fetchTag(state) {
-            return state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]')
+             state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]')
             ;
         },
         createTag(state,name: string) {
@@ -43,7 +55,8 @@ const store = new Vuex.Store({
 
         saveTags(state) {
             window.localStorage.setItem('tagList', JSON.stringify(state.tagList));
-        }
+        },
+
 
     }
 

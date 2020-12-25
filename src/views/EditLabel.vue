@@ -24,15 +24,18 @@
 
 
     @Component({
-        components: {Button, FormItem}
+        components: {Button, FormItem},
+
     })
     export default class EditLable extends Vue {
+        get tag() {
+            return this.$store.state.currentTag;
+        }
 
-        tag?: Tag = undefined;
 
-        created(){
-            //TODO
-            //this.tag = store.findTag(this.$route.params.id);
+        created() {
+            const id = this.$route.params.id;
+            this.$store.commit('setCurrentTag', id);
             if (!this.tag) {
                 this.$router.replace('/404');
             }
@@ -41,14 +44,14 @@
         update(name: string) {
             if (this.tag) {
                 //TODO
-               // store.updateTag(this.tag.id, name);
+                // store.updateTag(this.tag.id, name);
             }
         }
 
         remove() {
             if (this.tag) {
                 //TODO
-                return
+                return;
                 // if (store.removeTag(this.tag.id)) {
                 //     this.$router.back();
                 // } else {
