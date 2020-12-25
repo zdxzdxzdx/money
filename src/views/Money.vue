@@ -8,10 +8,7 @@
                       placeholder="在这里输入备注"
                       @update:value="onUpdateNotes"/>
         </div>
-        <Tags :data-source="tags"/>
-        {{count}}
-        <button @click="$store.commit('increment',1)">点击</button>
-
+        <Tags/>
     </Layout>
 
 </template>
@@ -24,35 +21,19 @@
     import Tags from '@/components/Money/Tags.vue';
     import {Component} from 'vue-property-decorator';
 
-    import oldStore from '@/store/index2';
-    import store from '@/store/index';
     import Button from '@/components/Button.vue';
 
 
     @Component({
         components: {Button, Tags, FormItem, Types, NumberPad},
         computed: {
-            count() {
-                //return store.state.count
-                return this.$store.state.count;
-            },
             recordList() {
-                return oldStore.recordList;
+                return this.$store.state.recordList;
             }
         }
 
     })
     export default class Money extends Vue {
-
-        dataCount = store.state.count;
-
-        store = oldStore;
-        // add(){
-        //   oldStore.addCount()
-        // }
-        tags = oldStore.tagList;
-
-        // recordList: RecordItem[] = store.recordList;//recordList地址复制到recordList的地址
 
         record: RecordItem = {
             tags: [],
@@ -61,8 +42,8 @@
             amount: 0
         };
 
-        onUpdateTags(value: string[]) {
-            this.record.tags = value;
+        created(){
+            this.$store.commit('fetchRecords')
         }
 
         onUpdateNotes(value: string) {
@@ -72,15 +53,9 @@
         onUpdateAmount(value: string) {
             this.record.amount = parseFloat(value);
         }
-
         saveRecord() {
-            oldStore.createRecord(this.record);
+            this.$store.commit('createRecord',this.record)
         }
-
-        // add(){
-        //    // this.$store.commit('increment',1)
-        //     store.commit('increment',1)
-        // }
 
 
     }
