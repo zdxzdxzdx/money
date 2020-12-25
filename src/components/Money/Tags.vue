@@ -1,7 +1,7 @@
 <template>
     <div class="tags">
         <div class="new">
-            <button @click="create">新增标签</button>
+            <button @click="createTag">新增标签</button>
         </div>
         <ul class="current">
             <li v-for="tag in tagList" :key="tag.id"
@@ -17,16 +17,17 @@
 <script lang="ts">
     import Vue from 'vue';
     import {Component} from 'vue-property-decorator';
+    import TagHelper from '@/mixins/TagHelper';
+    import {mixins} from 'vue-class-component';
 
     @Component({
         computed: {
             tagList() {
-                //TODO
                 return this.$store.state.tagList;
             }
         }
     })
-    export default class Tags extends Vue {
+    export default class Tags extends mixins(TagHelper) {
 
         //  @Prop( {required:true}) readonly dataSource!: string[];
         selectedTags: string[] = [];
@@ -50,7 +51,6 @@
             if (!name) {
                 return window.alert('标签名不能为空');
             }
-            //TODO
             //store.createTag(name);
             this.$store.commit('createTag',name)
 
