@@ -46,6 +46,7 @@ const tagStore = {
             } else {
                 const tag = this.tagList.filter(item => item.id === id)[0];
                 tag.name = name;
+                this.saveTags();
                 return 'success';
             }
         } else {
