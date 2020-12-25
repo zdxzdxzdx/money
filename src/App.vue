@@ -4,9 +4,15 @@
     </div>
 
 </template>
-<script lang="ts">
+<script lang="js">
+    import store from "@/store/index2";
+
     export default {
-        name:"App"
+        data(){
+            return {
+                store:store
+            }
+        }
     }
 
 </script>
