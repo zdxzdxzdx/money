@@ -1,8 +1,8 @@
 <template>
     <div>
         <ul  class="tabs" :class="{[classPrefix+ '-tabs']: classPrefix}">
-            <li v-for="item in dataSource" :key="item.value"
-              class="tabs-item"  :class="liClass(item)"
+            <li v-for="item in dataSource" :key="item.value" class="tabs-item"
+                :class="liClass(item)"
                 @click="select(item)">{{item.text}}
             </li>
         </ul>
@@ -21,6 +21,8 @@
         dataSource!: DataSourceItem[];
         @Prop() readonly value!: string;
         @Prop(String) classPrefix?: string;
+        @Prop({type: String,default: '64px'})
+        height!: string
 
         select(item: DataSourceItem){
             this.$emit('update:value',item.value)
